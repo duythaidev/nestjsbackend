@@ -14,6 +14,7 @@ async function bootstrap() {
   );
   const configService = app.get(ConfigService);
   const PORT = configService.get<number>('PORT');
+  app.setGlobalPrefix('api/v1', { exclude: ['/'] });
 
   await app.listen(PORT ?? 8080);
   Logger.log(
