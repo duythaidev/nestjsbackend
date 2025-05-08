@@ -9,7 +9,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const PORT = configService.get<number>('PORT');
 
-  await app.listen(PORT ?? 3000);
+  await app.listen(PORT ?? 8080);
   Logger.log(
     ` Microservice ready to receive Redis messages in PORT - ${PORT}\n Environment - `,
   );
