@@ -19,28 +19,31 @@ export class UsersService {
     };
   }
 
-
   async findAll(page: number, limit: number) {
 
     const skip = (page - 1) * limit
 
-    const users = await this.UserModel.find({}).select('-_id')
+    const users = await this.UserModel.find({})
       .limit(limit)
       .skip(skip)
+    // .select('-_id')
 
     return users;
   }
 
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    const user = await this.UserModel.findOne({ _id: id })
+    return { ...user };
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(updateUserDto: UpdateUserDto) {
+    const updatedUser = await this.UserModel.findOneAndUpdate({ _id: updateUserDto._id }, updateUserDto)
+    return updatedUser;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(_id: number) {
+    const res = await this.UserModel.deleteOne({ _id })
+    return res;
   }
 }
