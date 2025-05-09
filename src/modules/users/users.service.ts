@@ -32,9 +32,13 @@ export class UsersService {
   }
 
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const user = await this.UserModel.findOne({ _id: id })
     return { ...user };
+  }
+
+  async findUserByUsername(username: string) {
+    return await this.UserModel.findOne({ username });
   }
 
   async update(updateUserDto: UpdateUserDto) {

@@ -14,12 +14,12 @@ export class UsersController {
 
   @Get()
   findAll(@Query('page') page: number, @Query('limit') limit: number) {
-    return this.usersService.findAll(page ?? 1, limit ?? 5);
+    return this.usersService.findAll(page | 1, limit | 5);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    return this.usersService.findOne(id);
   }
 
   @Put()

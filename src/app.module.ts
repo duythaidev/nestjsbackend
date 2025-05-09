@@ -5,13 +5,10 @@ import { UsersModule } from './modules/users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TodosModule } from './modules/todos/todos.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    UsersModule,
-    TodosModule,
-
-
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -22,6 +19,10 @@ import { MongooseModule } from '@nestjs/mongoose';
       }),
       inject: [ConfigService],
     }),
+    
+    AuthModule,
+    UsersModule,
+    TodosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
