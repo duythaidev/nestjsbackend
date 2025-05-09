@@ -11,12 +11,23 @@ export class AuthService {
 
   // Guard call this service
   async validateUser(email: string, pass: string): Promise<any> {
+    // Tìm user trong db
     const user = await this.usersService.findUserByEmail(email);
+
     if (user && user.password === pass) {
       const { password, ...result } = user;
       return result;
     }
-    return null;
+
+    return null; // Ko thấy thì trả về null
+  }
+
+  async loginJWT(user: any) {
+    const payload = { username: user.username, _id: user._id };
+    return {
+      access_token: this.jwtService.sign(payload),
+       ...payload
+    };
   }
 
   async login(email: string, pass: string,): Promise<{ access_token: string }> {
