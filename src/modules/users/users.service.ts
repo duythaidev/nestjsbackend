@@ -40,6 +40,9 @@ export class UsersService {
   async findUserByUsername(username: string) {
     return await this.UserModel.findOne({ username });
   }
+  async findUserByEmail(email: string) {
+    return await this.UserModel.findOne({ email });
+  }
 
   async update(updateUserDto: UpdateUserDto) {
     const updatedUser = await this.UserModel.findOneAndUpdate({ _id: updateUserDto._id }, updateUserDto)
