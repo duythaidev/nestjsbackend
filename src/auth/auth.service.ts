@@ -13,9 +13,9 @@ export class AuthService {
   async validateUser(email: string, pass: string): Promise<any> {
     // Tìm user trong db
     const user = await this.usersService.findUserByEmail(email);
-
+    console.log("user: ", user)
     if (user && user.password === pass) {
-      const { password, ...result } = user;
+      const { password, ...result } = user.toObject();
       return result;
     }
 
@@ -24,22 +24,10 @@ export class AuthService {
 
   async loginJWT(user: any) {
     const payload = { username: user.username, _id: user._id };
+    console.log(payload)
     return {
       access_token: this.jwtService.sign(payload),
-       ...payload
-    };
-  }
-
-  async login(email: string, pass: string,): Promise<{ access_token: string }> {
-    const user = await this.usersService.findUserByEmail(email);
-    if (user?.password !== pass) {
-      throw new UnauthorizedException();
-    }
-    const payload = { _id: user._id, username: user.username }
-    const access_token = await this.jwtService.signAsync(payload)
-
-    return {
-      access_token, ...payload
+      ...payload
     };
   }
 }
